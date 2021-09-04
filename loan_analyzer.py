@@ -21,6 +21,7 @@ loan_costs = [500, 600, 200, 1000, 450]
 # Print the number of loans from the list
 # YOUR CODE HERE!
 
+# Prints total number of loans within the 'loan_costs' list
 number_loans = len(loan_costs)
 print("Number of loans within the list are:", number_loans)
 
@@ -29,6 +30,7 @@ print("Number of loans within the list are:", number_loans)
 # Print the total value of the loans
 # YOUR CODE HERE!
 
+# Prints total $ amount of all loans within the 'loan_costs' list
 total_loans = sum(loan_costs)
 print("Total amount of all loans is: $", total_loans)
 
@@ -37,6 +39,7 @@ print("Total amount of all loans is: $", total_loans)
 # Print the average loan amount
 # YOUR CODE HERE!
 
+# Prints average $ amount of all loans within the 'loan_costs' list
 avg_loan_amount = total_loans / number_loans
 print("Average amount for any given loan is: $", avg_loan_amount)
 
@@ -75,6 +78,8 @@ loan = {
 # Print each variable.
 # YOUR CODE HERE!
 
+# Prints 'remaining_months' and 'future_value' from the 'loan' dict 
+# on seperate lines, each with a matching str type label
 print("Remaining months:", loan.get("remaining_months"))
 print("Future value: $", loan.get("future_value"))
 
@@ -85,6 +90,7 @@ print("Future value: $", loan.get("future_value"))
 
 # YOUR CODE HERE!
 
+# Calculates the fair present value of 'loan' dict and prints it
 fair_value = loan.get("future_value") / (1 + 0.20/12) ** loan.get("remaining_months")
 print(f"Fair loan value: $", round(fair_value, 2))
 
@@ -94,6 +100,8 @@ print(f"Fair loan value: $", round(fair_value, 2))
 #    Else, the present value of the loan is less than the loan cost, then print a message that says that the loan is too expensive and not worth the price.
 # YOUR CODE HERE!
 
+# Determines if the loan in question is priced fairly by comparing 
+# the price to its fair value. Prints a stmt reflecting this
 if fair_value >= loan.get("loan_price"):
     print("This loan is worth at least the cost to buy it.")
 else:
@@ -124,6 +132,7 @@ new_loan = {
 #    The function should return the `present_value` for the loan.
 # YOUR CODE HERE!
 
+# Creates new function to call, returns 'new_loan's present value
 def calculate_present_value(future_value, remaining_months, annual_discount_rate):
     present_value = future_value / (1 + annual_discount_rate / 12) ** remaining_months
     return present_value
@@ -132,9 +141,12 @@ def calculate_present_value(future_value, remaining_months, annual_discount_rate
 #    Use an `annual_discount_rate` of 0.2 for this new loan calculation.
 # YOUR CODE HERE!
 
+# 'annual_discount_rate' is not in 'new_loan' dict, it is declared here
 annual_discount_rate = 0.20
+# New 'present_value' is calculated by calling on the previously defined function
+# and arguments to pass to the function's parameters
 present_value = calculate_present_value(new_loan["future_value"], new_loan["remaining_months"], annual_discount_rate)
-
+# Prints the new 'present_value"
 print(f"The present value of the loan is: ${round(present_value, 2)}")
 
 
@@ -179,19 +191,26 @@ loans = [
 # @TODO: Create an empty list called `inexpensive_loans`
 # YOUR CODE HERE!
 
+# An empty list for appending the correct loan(s)
 inexpensive_loans = []
 
 # @TODO: Loop through all the loans and append any that cost $500 or less to the `inexpensive_loans` list
 # YOUR CODE HERE!
 
-
+# iterates over each dict in 'loans' list
 for i in loans:
+    # Conditionally passes loans under $500 through to be appended 
+    # to the empty list 'inexpensive_loans' above
     if i["loan_price"] < 500:
         inexpensive_loans.append(i["loan_price"])
+    # Any loans with a price >= $500 are ignored, and the 'for' loop 
+    # will continue to iterate over each item within the list
 
 # @TODO: Print the `inexpensive_loans` list
 # YOUR CODE HERE!
 
+# Prints the previously empty list, which now contains any loans 
+# with a price < $500
 print("Inexpensive loans priced below $500:", inexpensive_loans)
 
 
@@ -219,8 +238,14 @@ output_path = Path("inexpensive_loans.csv")
 # and each row of `loan.values()` from the `inexpensive_loans` list.
 # YOUR CODE HERE!
 
+# Uses the output file path to create a new .csv file
+# and indicates that we're 'w'riting a file. Specifically,
+# one delimited by ','
 with open(output_path, "w") as csvfile:
     csvwriter = csv.writer(csvfile, delimiter=",")
+    # Inserts a row of headers defined in the list 'header'
     csvwriter.writerow(header)
+    # iterates over all appended loans in 'inexpensive_loans' and inserts
+    # rows of loan values in the .csv file
     for loan in inexpensive_loans:
         csvwriter.writerow(loan.values())
