@@ -1,2 +1,4 @@
-# Module_1_Challenge
-Repository for Module 1 Challenge files
+# 1: Financial Programming with Python
+FinTech Boot Camp Module 1 Challenge
+
+---
